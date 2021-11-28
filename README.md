@@ -11,7 +11,7 @@ PyGP的实现方式非常简单粗暴，PyGP背后的函数均能够对本地端
 
 对于PyGP，有正在开发的适用例如下：
 
-'''python
+```python
 import GPplatform.GPCore as platform
 import GPplatform.GPObject as GObject
 import GPplatform.GPWidgets as GWidgets
@@ -25,7 +25,7 @@ if platform.MainPageUI.getStyleGPOLName() != "Style":
 platform.StoryControll.setStoryEntrance("TS1.spol")
 platform.StoryControll.start()
 platform.Tag.GPOL_END()
-'''
+```
 
 在上面的例子中，GPOL脚本从platform.Tag.GPOL_MAIN()开始，从platform.Tag.GPOL_END()结束。可以将其视作所谓的主函数。Python程序从GPOL_MAIN()开始连接11451端口，监听11452端口，从GPOL_END()开始断开11451端口，停止监听11452端口。所以在这两个Tag之外的其他PyGP语句都不能正常执行，会引起报错。
 
