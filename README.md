@@ -10,6 +10,7 @@ PyGP的实现方式非常简单粗暴，PyGP背后的函数均能够对本地端
 这样通过本地端口通信来实现程序功能是比较低效的，但由于GPOL本身只是一个用来开发视觉小说逻辑过程与前端过程的脚本，本身不涉及到密集运算与密集通信，因此这样的实现速度是可以接受的（至少目前如此）
 
 对于PyGP，有正在开发的适用例如下：
+
 '''python
 import GPplatform.GPCore as platform
 import GPplatform.GPObject as GObject
@@ -25,6 +26,7 @@ platform.StoryControll.setStoryEntrance("TS1.spol")
 platform.StoryControll.start()
 platform.Tag.GPOL_END()
 '''
+
 在上面的例子中，GPOL脚本从platform.Tag.GPOL_MAIN()开始，从platform.Tag.GPOL_END()结束。可以将其视作所谓的主函数。Python程序从GPOL_MAIN()开始连接11451端口，监听11452端口，从GPOL_END()开始断开11451端口，停止监听11452端口。所以在这两个Tag之外的其他PyGP语句都不能正常执行，会引起报错。
 
 platform.MainPageUI是设置程序主页对象，拥有多个成员函数。这些成员函数的名字大多直接来自于Qt。若cYSP提供了一些Qt函数之外的成员函数，则这些函数的名字是新命名的。由于cYSP由Qt编写，依赖Qt机制，因此GPOL中一切设置StyleSheet的文本均为Qt的QSS文本。后期可能会通过转换过程弱化Qt的概念，但至少目前如此。
