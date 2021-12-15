@@ -16,18 +16,22 @@ import GPplatform.GPCore as platform
 import GPplatform.GPObject as GObject
 import GPplatform.GPWidgets as GWidgets
 
-platform.Tag.GPOL_MAIN()
-platform.MainPageUI.setStyleSheet("QWidget{color:#FFFFFF;}")
-platform.MainPageUI.setStyleGPOL("Style.gpol")
-if platform.MainPageUI.getStyleGPOLName() != "Style":
-    platform.Console.print("can not set Style Correctly")
-    platform.Program.exit()
-platform.StoryControll.setStoryEntrance("TS1.spol")
-platform.StoryControll.start()
-platform.Tag.GPOL_END()
+class Main(platform.GPMain):
+    def main(this,argv):
+        platform.Console.print("try");
+        platform.MainPageUI.setStyleSheet("QWidget{color:#FFFFFF;}");
+        platform.MainPageUI.setStyleGPOL("Style.gpol");
+        eg1=TestObject();
+        if platform.MainPageUI.getStyleGPOLName() != "Style":
+            platform.Console.print("can not set Style Correctly");
+            platform.Program.exit();
+        platform.StoryControll.setStoryEntrance("TS1.spol");
+        platform.StoryControll.start();
+
+Main()
 ```
 
-在上面的例子中，GPOL脚本从platform.Tag.GPOL_MAIN()开始，从platform.Tag.GPOL_END()结束。可以将其视作所谓的主函数。Python程序从GPOL_MAIN()开始连接11451端口，监听11452端口，从GPOL_END()开始断开11451端口，停止监听11452端口。所以在这两个Tag之外的其他PyGP语句都不能正常执行，会引起报错。
+在上面的例子中，我们可以看到PyGP引入了主类主函的概念，即GPOL脚本必须从一个继承GPMain的主类的主函数main开始。这是因为基类GPMain会在执行main函数之前开始连接11451端口，监听11452端口，在main函数结束之后开始断开11451端口，停止监听11452端口。所以主类主函之外的其他PyGP语句都不能正常执行，会引起报错。
 
 platform.MainPageUI是设置程序主页对象，拥有多个成员函数。这些成员函数的名字大多直接来自于Qt。若cYSP提供了一些Qt函数之外的成员函数，则这些函数的名字是新命名的。由于cYSP由Qt编写，依赖Qt机制，因此GPOL中一切设置StyleSheet的文本均为Qt的QSS文本。后期可能会通过转换过程弱化Qt的概念，但至少目前如此。
 
